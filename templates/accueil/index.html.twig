@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+{% if app.user %}
+        <h1>Bienvenue, {{ app.user.username }}!</h1>
+        <p>Contenu pour les utilisateurs connectés.</p>
+    {% else %}
+        <h1>Bienvenue, invité!</h1>
+        <p>Contenu pour les utilisateurs non connectés.</p>
+    {% endif %}
+{% endblock %}
