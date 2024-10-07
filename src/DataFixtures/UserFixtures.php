@@ -22,6 +22,7 @@ class UserFixtures extends Fixture
         for ($i = 0; $i < 10 ; $i++){
             $user = new User();
             $user->setUsername ("user".$i."@lala.com");
+            $user->setPseudo ("user".$i);
             $user->setPassword($this->passwordHasher->hashPassword(
                  $user,
                  'a'
