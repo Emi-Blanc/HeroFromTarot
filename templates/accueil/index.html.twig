@@ -4,7 +4,14 @@
 
 {% block body %}
 
-<h1>Bienvenue,</h1>
+{% if app.user %}
+        <h1>Bienvenue, {{ app.user.username }}!</h1>
+        <p>Contenu pour les utilisateurs connectés.</p>
+    {% else %}
+        <h1>Bienvenue</h1>
+        <p>Contenu pour les utilisateurs non connectés.</p>
+    {% endif %}
+
 <p>
     En panne d’inspiration pour vos personnages ? Découvrez la magie des cartes de tarot ! En tirant aléatoirement trois cartes, créez des personnages fascinants et uniques. Chaque carte raconte une histoire et révèle des traits de caractère inédits. Laissez les symboles du tarot guider votre imagination pour façonner des héros inattendus.
 
@@ -31,13 +38,4 @@
     });
 </script>
 
-{% if app.user %}
-        <h1>Bienvenue, {{ app.user.username }}!</h1>
-        <p>Contenu pour les utilisateurs connectés.</p>
-    {% else %}
-        <h1>Bienvenue, invité!</h1>
-        <p>Contenu pour les utilisateurs non connectés.</p>
-    {% endif %}
 {% endblock %}
-
-
