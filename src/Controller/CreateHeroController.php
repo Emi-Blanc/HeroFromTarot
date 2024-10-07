@@ -40,5 +40,5 @@ class CreateHeroController extends AbstractController
 
         // Retourner les cartes sous forme de JSON
         return new JsonResponse($randomCards);
-    }
+    } 
 }
