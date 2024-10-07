@@ -3,30 +3,5 @@
 {% block title %}Créer un héros{% endblock %}
 
 {% block body %}
-<h1>Bienvenue,</h1>
-<p>
-    En panne d’inspiration pour vos personnages ? Découvrez la magie des cartes de tarot ! En tirant aléatoirement trois cartes, créez des personnages fascinants et uniques. Chaque carte raconte une histoire et révèle des traits de caractère inédits. Laissez les symboles du tarot guider votre imagination pour façonner des héros inattendus.
 
-    Prêt à commencer ? Cliquez sur le bouton ci-dessous pour tirer vos cartes et donner vie à un nouveau personnage !
-</p>
-<button id="draw-cards-btn">Tirage</button>
-
-<div id="cards-result">
-    <!-- Les cartes tirées seront affichées ici -->
-</div>
-
-<script>
-    document.getElementById('draw-cards-btn').addEventListener('click', function() {
-        fetch('{{ path('app_create_hero_draw') }}')
-            .then(response => response.json())
-            .then(data => {
-                let resultDiv = document.getElementById('cards-result');
-                resultDiv.innerHTML = ''; // Vider le résultat précédent
-                data.forEach(card => {
-                    resultDiv.innerHTML += `<p>${card.number} - ${card.name} - ${card.description}</p>`;
-                });
-            })
-            .catch(error => console.error('Erreur lors du tirage des cartes :', error));
-    });
-</script>
 {% endblock %}
