@@ -23,6 +23,8 @@
     <!-- Les cartes tirées seront affichées ici -->
 </div>
 
+<button id="save-hero-btn">Sauvegarder le tirage</button>
+
 <script>
     document.getElementById('draw-cards-btn').addEventListener('click', function() {
         fetch('{{ path('app_create_hero_draw') }}')
@@ -36,10 +38,7 @@
             })
             .catch(error => console.error('Erreur lors du tirage des cartes :', error));
     });
-</script>
-<button id="save-hero-btn">Sauvegarder le tirage</button>
 
-<script>
     document.getElementById('save-hero-btn').addEventListener('click', function() {
         const cards = []; // Récupérer les identifiants des cartes que tu as tirées
 

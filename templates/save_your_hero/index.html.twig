@@ -1,7 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SaveYourHeroController!{% endblock %}
+{% block title %}Mes Héros{% endblock %}
 
 {% block body %}
-
+    <h1>Hey, {{ app.user.username }}!</h1>
+    <p>Tes Héros!</p>
+    
+    {% if heroes is not empty %}
+        <ul>
+            {% for hero in heroes %}
+                <li>{{ hero.name }}</li> {# Ou tout autre attribut que vous souhaitez afficher #}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun héros créé.</p>
+    {% endif %}
+    
+    <a href="{{ path('app_accueil') }}">Créer un nouveau héros</a> {# Lien pour revenir à la page de création #}
 {% endblock %}

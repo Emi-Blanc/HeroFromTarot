@@ -24,7 +24,7 @@ class UserFixtures extends Fixture
             $user->setUsername ("user".$i."@lala.com");
             $user->setPassword($this->passwordHasher->hashPassword(
                  $user,
-                 'lePassword'.$i
+                 'a'
              ));
             $manager->persist ($user);
         }
