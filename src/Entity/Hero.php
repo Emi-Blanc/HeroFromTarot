@@ -20,6 +20,10 @@ class Hero
     #[ORM\ManyToMany(targetEntity: CardMaj::class)]
     private Collection $cards;
 
+    #[ORM\ManyToOne(inversedBy: 'heros')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->cards = new ArrayCollection();
@@ -51,6 +55,18 @@ class Hero
         if (!$this->cards->contains($card)) {
             $this->cards->add($card);
         }
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
         return $this;
     }
 }

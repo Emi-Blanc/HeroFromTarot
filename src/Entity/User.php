@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -35,6 +37,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
+
+    /**
+     * @var Collection<int, Hero>
+     */
+    #[ORM\OneToMany(targetEntity: Hero::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $heros;
+
+    public function __construct()
+    {
+        $this->heros = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +132,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(string $pseudo): static
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hero>
+     */
+    public function getHeros(): Collection
+    {
+        return $this->heros;
+    }
+
+    public function addHero(Hero $hero): static
+    {
+        if (!$this->heros->contains($hero)) {
+            $this->heros->add($hero);
+            $hero->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHero(Hero $hero): static
+    {
+        if ($this->heros->removeElement($hero)) {
+            // set the owning side to null (unless already changed)
+            if ($hero->getUser() === $this) {
+                $hero->setUser(null);
+            }
+        }
 
         return $this;
     }
