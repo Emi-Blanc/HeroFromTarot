@@ -28,6 +28,8 @@ class UserFixtures extends Fixture
                  'a'
              ));
             $manager->persist ($user);
+            // rendre l'objet refrençable depuis les autres fixtures
+            $this->addReference('user' . $i, $user);
         }
         $manager->flush();
     }
