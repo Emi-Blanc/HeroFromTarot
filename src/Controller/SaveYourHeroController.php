@@ -70,14 +70,14 @@ class SaveYourHeroController extends AbstractController
     }
 
     #[Route('/hero/{id}', name: 'app_hero_detail')]
-public function heroDetail(Hero $hero): Response
-{
-    // Récupérer les cartes associées à ce héros
-    $cards = $hero->getCards();
-
-    return $this->render('save_your_hero/detail.html.twig', [
-        'hero' => $hero,
-        'cards' => $cards,
-    ]);
-}
+    public function heroDetail(Hero $hero): Response
+    {
+        // Vérifier si le héros et ses cartes sont bien récupérés
+        // dd($hero, $hero->getCards());
+    
+        return $this->render('save_your_hero/detail.html.twig', [
+            'hero' => $hero,
+            'cards' => $hero->getCards(),
+        ]);
+    }
 }
