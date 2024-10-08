@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Héros{% endblock %}
+
+{% block body %}
+    <h1>Détails du Héros : {{ hero.name }}</h1>
+
+    <h2>Cartes tirées :</h2>
+    <ul>
+        {% for card in cards %}
+            <li>
+                {{ card.number }} - {{ card.name }}: {{ card.description }}
+            </li>
+        {% else %}
+            <li>Aucune carte associée</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('app_your_heroes') }}">Retour à la liste des héros</a>
+{% endblock %}

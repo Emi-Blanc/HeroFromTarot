@@ -1,20 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes Héros{% endblock %}
+{% block title %}Tes Héros{% endblock %}
 
 {% block body %}
-    <h1>Hey, {{ app.user.pseudo }}!</h1>
-    <p>Tes Héros!</p>
-    
-    {% if heroes is not empty %}
-        <ul>
-            {% for hero in heroes %}
-                <li>{{ hero.name }}</li> {# Ou tout autre attribut que vous souhaitez afficher #}
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Aucun héros créé.</p>
-    {% endif %}
-    
-    <a href="{{ path('app_accueil') }}">Créer un nouveau héros</a> {# Lien pour revenir à la page de création #}
+    <h1>Vos Héros</h1>
+
+    <ul>
+        {% for hero in heroes %}
+            <li>
+                <a href="{{ path('app_hero_detail', {id: hero.id}) }}">
+                    {{ hero.name }}
+                </a>
+            </li>
+        {% else %}
+            <li>Aucun héros disponible</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
