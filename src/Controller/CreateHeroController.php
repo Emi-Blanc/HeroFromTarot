@@ -34,6 +34,7 @@ class CreateHeroController extends AbstractController
                     'name' => $cards[$key]->getName(),
                     'number' => $cards[$key] -> getNumber(),
                     'description' => $cards[$key]->getDescription(),
+                    'image' => $cards[$key]->getImage(),
                 ];
             }
         }
