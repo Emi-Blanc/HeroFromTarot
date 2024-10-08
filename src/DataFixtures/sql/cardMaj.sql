@@ -18,6 +18,6 @@ INSERT INTO card_maj (name, number, description, image) VALUES
 ("La Tour", "16", "Une personne en pleine transformation, souvent perçue comme confrontée à des bouleversements et des crises. Elle est capable de faire face à l'imprévu avec courage et détermination.", "16 tour.jpeg"),
 ("L'Étoile", "17", "Une personne inspirante et optimiste, qui valorise l'espoir et la spiritualité. Elle est souvent perçue comme une guide, capable d'apporter lumière et inspiration aux autres.", "17 etoile.jpeg"),
 ("La Lune", "18", "Une personne calme et réfléchie, qui valorise l'intuition et les émotions. Elle est souvent perçue comme mystérieuse et apaisante, apportant une aura de sérénité.", "18 lune.jpeg"),
-("Le Soleil", "19", "Une personne joyeuse et énergique, qui valorise la positivité et la vitalité. Elle est souvent perçue comme une source de lumière et de bonheur pour son entourage.", "19 soleil.jpg"),
+("Le Soleil", "19", "Une personne joyeuse et énergique, qui valorise la positivité et la vitalité. Elle est souvent perçue comme une source de lumière et de bonheur pour son entourage.", "19 soleil.jpeg"),
 ("Le Jugement", "20", "Une personne introspective et juste, qui valorise la rédemption et la transformation personnelle. Elle est souvent perçue comme un catalyseur de changement et de renouveau.", "20 jugement.jpeg"),
 ("Le Monde", "21", "Une personne accomplie et intégrée, qui valorise l'harmonie et l'achèvement. Elle est souvent perçue comme un exemple d'équilibre et de réussite.", "21 monde.jpeg");
