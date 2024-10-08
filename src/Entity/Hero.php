@@ -38,7 +38,7 @@ class Hero
         $colors = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠', '🩷', '⚫', '⚪'];
  
         // Liste des animaux possibles
-        $animals = ['lion', 'tiger', 'eagle', 'shark', 'wolf', 'elephant', 'bear', 'panther', 'snake'];
+        $animals = ['🦁', '🐯', '🦅', '🦈', '🐺', '🐘', '🐻', '🐈‍⬛', '🐍'];
  
         // Attribuer une couleur et un animal aléatoires
         $this->color = $colors[array_rand($colors)];
