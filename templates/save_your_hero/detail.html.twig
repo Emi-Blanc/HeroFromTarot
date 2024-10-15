@@ -15,7 +15,7 @@
     <ul>
         {% for card in cards %}
             <li>
-                <img src="{{ asset('/images/cards/' ~ card.image) }}" alt="{{ card.name }}" style="width: 100px;">
+                <img src="{{ asset('/images/cardMaj/' ~ card.image) }}" alt="{{ card.name }}" style="width: 100px;">
                 {{ card.number }} - {{ card.name }}: {{ card.description }}
             </li>
         {% else %}
