@@ -3,9 +3,10 @@
 {% block title %}Détails du Héros{% endblock %}
 
 {% block body %}
-    <h1>Détails du Héros : {{ hero.name }} - {{ hero.color }} - {{ hero.animal }}</h1>
-
-    <h2>Cartes tirées :</h2>
+    <h2>Nom : {{ hero.name }} </h2>
+    <h2>Attributs : {{ hero.color }} - {{ hero.animal }}</h2>
+    <h2>Physique : </h2>
+    <h2>Personnalités :</h2>
     <ul>
         {% for card in cards %}
             <li>
