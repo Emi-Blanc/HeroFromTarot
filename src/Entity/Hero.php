@@ -49,11 +49,11 @@ class Hero
         // Liste des animaux possibles
         $animals = ['🦁', '🐯', '🦅', '🦈', '🐺', '🐘', '🐻', '🐈‍⬛', '🐍', '🐬', '🐎', '🐠', '🦉', '🦌', '🦬', '🦫']; 
 
-        $yeux = [ '🔵', '🟢', '⚫', '🟣', '🟤' ]; 
+        $yeux = ['🔵', '🟢', '⚫', '🟣', '🟤' ]; 
 
-        $morphologie = [ 'V', 'A', 'H', 'O', '8'];
+        $morphologie = ['V', 'A', 'H', 'O', '8'];
 
-        $cheveux = [ 'Rasé', 'WolfCut', 'Mulet', 'Papillon', 'Court', 'Playmobil', 'Crollé', 'Paille' ];
+        $cheveux = ['Rasé', 'WolfCut', 'Mulet', 'Papillon', 'Court', 'Playmobil', 'Crollé', 'Paille', 'Houpette', 'Perruque', 'Chauve'];
 
         
  
