@@ -22,6 +22,9 @@ class CardRoy
     #[ORM\Column(length: 255)]
     private ?string $description2 = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $image2 = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class CardRoy
     public function setDescription2(string $description2): static
     {
         $this->description2 = $description2;
+
+        return $this;
+    }
+
+    public function getImage2(): ?string
+    {
+        return $this->image2;
+    }
+
+    public function setImage2(string $image2): static
+    {
+        $this->image2 = $image2;
 
         return $this;
     }

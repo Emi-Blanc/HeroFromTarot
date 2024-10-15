@@ -25,6 +25,9 @@ class CardMin
     #[ORM\Column(length: 255)]
     private ?string $defaut = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $image3 = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class CardMin
     public function setDefaut(string $defaut): static
     {
         $this->defaut = $defaut;
+
+        return $this;
+    }
+
+    public function getImage3(): ?string
+    {
+        return $this->image3;
+    }
+
+    public function setImage3(string $image3): static
+    {
+        $this->image3 = $image3;
 
         return $this;
     }
