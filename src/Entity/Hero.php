@@ -35,10 +35,10 @@ class Hero
         $this->cards = new ArrayCollection();
  
         // Liste des couleurs possibles
-        $colors = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠', '🩷', '⚫', '⚪'];
+        $colors = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠', '🩷', '⚫', '⚪', '🩶', '🪙'];
  
         // Liste des animaux possibles
-        $animals = ['🦁', '🐯', '🦅', '🦈', '🐺', '🐘', '🐻', '🐈‍⬛', '🐍'];
+        $animals = ['🦁', '🐯', '🦅', '🦈', '🐺', '🐘', '🐻', '🐈‍⬛', '🐍', '🐬', '🐎', '🐠', '🦉', '🦌', '🦬', '🦫']; 
  
         // Attribuer une couleur et un animal aléatoires
         $this->color = $colors[array_rand($colors)];
