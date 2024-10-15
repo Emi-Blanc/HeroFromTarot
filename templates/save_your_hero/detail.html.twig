@@ -4,8 +4,13 @@
 
 {% block body %}
     <h2>Nom : {{ hero.name }} </h2>
-    <h2>Attributs : {{ hero.color }} - {{ hero.animal }}</h2>
-    <h2>Physique : </h2>
+    <h2>Attributs : </h2>
+    {{ hero.color }} <br> 
+    {{ hero.animal }}
+    <h2>Physique :</h2> 
+        Morpho : {{ hero.morphologie }}<br>
+        Coupe : {{ hero.cheveux }} <br> 
+        Yeux :{{ hero.yeux }} 
     <h2>Personnalités :</h2>
     <ul>
         {% for card in cards %}

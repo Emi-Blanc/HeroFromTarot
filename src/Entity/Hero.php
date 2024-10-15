@@ -29,6 +29,15 @@ class Hero
     #[ORM\ManyToOne(inversedBy: 'heros')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $yeux = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $morphologie = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $cheveux = null;
  
     public function __construct()
     {
@@ -39,10 +48,21 @@ class Hero
  
         // Liste des animaux possibles
         $animals = ['🦁', '🐯', '🦅', '🦈', '🐺', '🐘', '🐻', '🐈‍⬛', '🐍', '🐬', '🐎', '🐠', '🦉', '🦌', '🦬', '🦫']; 
+
+        $yeux = [ '🔵', '🟢', '⚫', '🟣', '🟤' ]; 
+
+        $morphologie = [ 'V', 'A', 'H', 'O', '8'];
+
+        $cheveux = [ 'Rasé', 'WolfCut', 'Mulet', 'Papillon', 'Court', 'Playmobil', 'Crollé', 'Paille' ];
+
+        
  
         // Attribuer une couleur et un animal aléatoires
         $this->color = $colors[array_rand($colors)];
         $this->animal = $animals[array_rand($animals)];
+        $this->yeux = $yeux[array_rand($yeux)];
+        $this->morphologie = $morphologie[array_rand($morphologie)];
+        $this->cheveux = $cheveux[array_rand($cheveux)];
     }
  
     public function getId(): ?int
@@ -105,6 +125,42 @@ class Hero
     {
         $this->user = $user;
  
+        return $this;
+    }
+
+    public function getYeux(): ?string
+    {
+        return $this->yeux;
+    }
+
+    public function setYeux(string $yeux): static
+    {
+        $this->yeux = $yeux;
+
+        return $this;
+    }
+
+    public function getMorphologie(): ?string
+    {
+        return $this->morphologie;
+    }
+
+    public function setMorphologie(string $morphologie): static
+    {
+        $this->morphologie = $morphologie;
+
+        return $this;
+    }
+
+    public function getCheveux(): ?string
+    {
+        return $this->cheveux;
+    }
+
+    public function setCheveux(string $cheveux): static
+    {
+        $this->cheveux = $cheveux;
+
         return $this;
     }
 }
