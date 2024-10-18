@@ -107,6 +107,7 @@ class SaveYourHeroController extends AbstractController
     #[Route('/hero/{id}', name: 'app_hero_detail')]
 public function heroDetail($id, EntityManagerInterface $entityManager): Response
 {
+    // trouver un héros avec un identifiant spécifique et le stocker dans la variable $hero
     $hero = $entityManager->getRepository(Hero::class)->find($id);
 
     if (!$hero) {

@@ -55,6 +55,8 @@
             <li>Aucune carte mineure associée</li>
         {% endif %}
     </ul>
+    <pre>{{ dump(hero) }}</pre>
+<pre>{{ dump(hero.getCardMajs()) }}</pre>
 
     <a href="{{ path('app_your_heroes') }}">Retour à la liste des héros</a>
 {% endblock %}
