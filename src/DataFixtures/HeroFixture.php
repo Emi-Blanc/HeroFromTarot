@@ -15,7 +15,7 @@ class HeroFixture extends Fixture
             $hero->setName("nom" . $i);
             $manager->persist ($hero);
             
-            // rendre l'objet refrençable depuis les autres fixtures
+            // rendre l'objet referençable depuis les autres fixtures
             $this->addReference('hero' . $i, $hero);
 
             // fixer le User
