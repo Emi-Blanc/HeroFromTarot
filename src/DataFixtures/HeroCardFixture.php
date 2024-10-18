@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\CardMaj;
+use App\Entity\CardMin;
+use App\Entity\CardRoy;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -21,39 +23,39 @@ class HeroCardFixture extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
+        // Obtenir toutes les cartes de la BD
+        $cartesMaj = $this->em->getRepository(CardMaj::class)->findAll();
+        $cartesRoy = $this->em->getRepository(CardRoy::class)->findAll();
+        $cartesMin = $this->em->getRepository(CardMin::class)->findAll();
 
-
-        // obtenir toutes les cartes de la BD
-        $cartesRep = $this->em->getRepository(CardMaj::class);
-        $cartes = $cartesRep->findAll();
-
-
-        // parcourir tous les heros
+        // Parcourir tous les héros
         for ($i = 0; $i < 15; $i++) {
-            // obtenir l'hero
+            // Obtenir l'héro
             $hero = $this->getReference('hero' . $i);
 
-            $arrPositions = range(0, count($cartes) - 1);
+            // Assigner une carte majeure
+            $indexMaj = array_rand($cartesMaj);
+            $hero->addCardMaj($cartesMaj[$indexMaj]);
 
-            // affecter trois cartes
-            for ($j = 0; $j < 3; $j++) {
-                $index = array_rand($arrPositions);
-                $pos = $arrPositions[$index]; // obtenir une position 
-                $hero->addCard($cartes[$pos]);
-                unset ($arrPositions[$index]);
-            }
+            // Assigner une carte royale
+            $indexRoy = array_rand($cartesRoy);
+            $hero->addCardRoy($cartesRoy[$indexRoy]);
+
+            // Assigner une carte mineure
+            $indexMin = array_rand($cartesMin);
+            $hero->addCardMin($cartesMin[$indexMin]);
         }
-
 
         $manager->flush();
     }
 
-
     public function getDependencies()
     {
-        return ([
+        return [
             UserFixtures::class,
-            CardMajFixtures::class
-        ]);
+            CardMajFixtures::class,
+            CardRoyFixture::class,
+            CardMinFixture::class,
+        ];
     }
 }

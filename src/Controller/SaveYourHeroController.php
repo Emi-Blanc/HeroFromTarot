@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Entity\Hero;
 use App\Repository\CardMajRepository;
+use App\Repository\CardRoyRepository;
+use App\Repository\CardMinRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,41 +18,72 @@ class SaveYourHeroController extends AbstractController
     #[Route('/save-hero', name: 'app_save_hero', methods: ['POST'])]
     public function saveHero(
         Request $request, 
-        CardMajRepository $cardMajRepository, 
+        CardMajRepository $cardMajRepository,
+        CardRoyRepository $cardRoyRepository,
+        CardMinRepository $cardMinRepository,
         EntityManagerInterface $entityManager
     ): JsonResponse {
-        // Vérifier si la requête est de type POST
         if ($request->isMethod('POST')) {
             $data = json_decode($request->getContent(), true);
-
-            // Créer une nouvelle instance de Hero
+            
+            // Debug: afficher les données reçues
+            error_log(print_r($data, true)); 
+    
             $hero = new Hero();
             $hero->setName($data['name']);
-
-            // Récupérer les cartes tirées
-            foreach ($data['cards'] as $cardId) {
-                $card = $cardMajRepository->find($cardId);
-                if ($card) {
-                    $hero->addCard($card);
+    
+            // Ajout des cartes majeures
+            foreach ($data['cardMajs'] as $cardId) {
+                $cardMaj = $cardMajRepository->find($cardId);
+                if ($cardMaj) {
+                    $hero->addCardMaj($cardMaj);
+                    error_log("Carte majeure ajoutée: " . $cardId);
+                } else {
+                    error_log("Carte majeure non trouvée: " . $cardId);
                 }
             }
-
+    
+            // Ajout des cartes royales
+            foreach ($data['cardRoys'] as $cardId) {
+                $cardRoy = $cardRoyRepository->find($cardId);
+                if ($cardRoy) {
+                    $hero->addCardRoy($cardRoy);
+                    error_log("Carte royale ajoutée: " . $cardId);
+                } else {
+                    error_log("Carte royale non trouvée: " . $cardId);
+                }
+            }
+    
+            // Ajout des cartes mineures
+            foreach ($data['cardMins'] as $cardId) {
+                $cardMin = $cardMinRepository->find($cardId);
+                if ($cardMin) {
+                    $hero->addCardMin($cardMin);
+                    error_log("Carte mineure ajoutée: " . $cardId);
+                } else {
+                    error_log("Carte mineure non trouvée: " . $cardId);
+                }
+            }
+    
             // Associer l'utilisateur connecté au héros
             $user = $this->getUser();
             if ($user) {
-                $hero->setUser($user); // Associe le héros à l'utilisateur connecté
+                $hero->setUser($user);
             }
-
-            // Persister l'entité
-            $entityManager->persist($hero);
-            $entityManager->flush();
-
-            return new JsonResponse(['status' => 'Héros sauvegardé!']);
+    
+            try {
+                $entityManager->persist($hero);
+                $entityManager->flush();
+                return new JsonResponse(['status' => 'Héros sauvegardé!']);
+            } catch (\Exception $e) {
+                error_log("Erreur lors de la sauvegarde du héros: " . $e->getMessage());
+                return new JsonResponse(['status' => 'Erreur lors de la sauvegarde du héros.'], 500);
+            }
         }
-
-        // Si la requête est de type GET, retourner une réponse appropriée
+    
         return new JsonResponse(['message' => 'Envoyez une requête POST pour sauvegarder un héros.']);
     }
+
 
     #[Route('/your-heroes', name: 'app_your_heroes')]
     public function yourHeroes(HeroRepository $heroRepository): Response
@@ -70,14 +103,19 @@ class SaveYourHeroController extends AbstractController
     }
 
     #[Route('/hero/{id}', name: 'app_hero_detail')]
-    public function heroDetail(Hero $hero): Response
+    public function heroDetail($id, EntityManagerInterface $entityManager): Response
     {
-        // Vérifier si le héros et ses cartes sont bien récupérés
-        // dd($hero, $hero->getCards());
+        $hero = $entityManager->getRepository(Hero::class)->find($id);
+
+    if (!$hero) {
+        throw $this->createNotFoundException('Héros non trouvé');
+    }
     
         return $this->render('save_your_hero/detail.html.twig', [
             'hero' => $hero,
-            'cards' => $hero->getCards(),
+            'cardMajs' => $hero->getCardMajs(),
+            'cardRoys' => $hero->getCardRoys(),
+            'cardMins' => $hero->getCardMins(),
         ]);
     }
 }

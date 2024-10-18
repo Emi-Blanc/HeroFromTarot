@@ -4,23 +4,49 @@
 
 {% block body %}
     <h2>Nom : {{ hero.name }} </h2>
+    
     <h2>Attributs : </h2>
     Couleur : {{ hero.color }} <br> 
-    Animal Totem : <h2>{{ hero.animal }}</h2>
-    <h2>Physique :</h2> 
-        Morpho : {{ hero.morphologie }}<br>
-        Coupe : {{ hero.cheveux }} <br> 
-        Yeux :{{ hero.yeux }} 
+    Animal Totem : <h3>{{ hero.animal }}</h3> <br> 
+    <h2>Physique : </h2>
+    Morphologie : {{ hero.morphologie }} <br> 
+    Cheveux : {{ hero.cheveux }} <br> 
+    Yeux: {{ hero.yeux }} <br> 
+
     <h2>Personnalité :</h2>
     <ul>
-        {% for card in cards %}
-            <li>
-                <img src="{{ asset('/images/cardMaj/' ~ card.image) }}" alt="{{ card.name }}" style="width: 100px;">
-                {{ card.number }} - {{ card.name }}: {{ card.description }}
-            </li>
+        {% if hero.getCardMajs() is not empty %}
+            {% for cardMaj in hero.getCardMajs() %}
+                <li>
+                    <img src="{{ asset('/images/cardMaj/' ~ cardMaj.image) }}" alt="{{ cardMaj.name }}" style="width: 100px;">
+                    {{ cardMaj.number }} - {{ cardMaj.name }}: {{ cardMaj.description }}
+                </li>
+            {% endfor %}
         {% else %}
-            <li>Aucune carte associée</li>
-        {% endfor %}
+            <li>Aucune carte majeure associée</li>
+        {% endif %}
+
+        {% if hero.getCardRoys() is not empty %}
+            {% for cardRoy in hero.getCardRoys() %}
+                <li>
+                    <img src="{{ asset('/images/cardRoy/' ~ cardRoy.image2) }}" alt="{{ cardRoy.nom }}" style="width: 100px;">
+                    {{ cardRoy.nom }} - {{ cardRoy.suite }}: {{ cardRoy.description2 }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>Aucune carte royale associée</li>
+        {% endif %}
+
+        {% if hero.getCardMins() is not empty %}
+            {% for cardMin in hero.getCardMins() %}
+                <li>
+                    <img src="{{ asset('/images/cardMin/' ~ cardMin.image3) }}" alt="{{ cardMin.numero }}" style="width: 100px;">
+                    {{ cardMin.numero }} - {{ cardMin.suite2 }}: {{ cardMin.qualite }} {{ cardMin.defaut }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>Aucune carte mineure associée</li>
+        {% endif %}
     </ul>
 
     <a href="{{ path('app_your_heroes') }}">Retour à la liste des héros</a>

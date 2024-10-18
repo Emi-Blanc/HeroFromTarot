@@ -26,47 +26,87 @@
 <button  id="save-hero-btn">Sauvegarder le tirage</button>
 
 <script>
-    document.getElementById('draw-cards-btn').addEventListener('click', function() {
-        fetch('{{ path('app_create_hero_draw') }}')
-            .then(response => response.json())
-            .then(data => {
-                let resultDiv = document.getElementById('cards-result');
-                resultDiv.innerHTML = ''; // Vider le résultat précédent
-                data.forEach(card => {
-                    resultDiv.innerHTML += `<p>${card.number} - ${card.name} - ${card.description}</p>`;
-                });
-            })
-            .catch(error => console.error('Erreur lors du tirage des cartes :', error));
-    });
-
-    document.getElementById('save-hero-btn').addEventListener('click', function() {
-        const cards = []; // Récupérer les identifiants des cartes que tu as tirées
-
-        // Exemple : suppose que tu as stocké les cartes dans une variable
-        const cardsElements = document.querySelectorAll('#cards-result p');
-        cardsElements.forEach(cardElement => {
-            const cardInfo = cardElement.innerText.split(' - '); // Assurez-vous que cela correspond à votre format
-            const cardId = cardInfo[0]; // Remplacez par l'identifiant de carte réel
-            cards.push(cardId);
-        });
-
-        const heroName = prompt("Entrez le nom de votre héros :"); // Demande un nom pour le héros
-
-        // Envoi des données via Fetch API
-        fetch('{{ path('app_save_hero') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name: heroName, cards: cards })
-        })
+     document.getElementById('draw-cards-btn').addEventListener('click', function() {
+    fetch('{{ path('app_create_hero_draw') }}')
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            alert(data.status); // Affiche un message de succès
+            let resultDiv = document.getElementById('cards-result');
+            resultDiv.innerHTML = ''; // Vider le résultat précédent
+
+            // Afficher la carte majeure
+            if (data.maj) {
+                resultDiv.innerHTML += `
+                    <div data-card-id="${data.maj.id}">
+                        <h3>Carte Majeure</h3>
+                        <img src="{{ asset('/images/cardMaj/') }}${data.maj.image}" alt="${data.maj.name}" style="width: 100px;">
+                        <p>${data.maj.number} - ${data.maj.name}: ${data.maj.description}</p>
+                    </div>
+                `;
+            }
+
+            // Afficher la carte royale
+            if (data.roy) {
+                resultDiv.innerHTML += `
+                    <div data-card-id="${data.roy.id}">
+                        <h3>Carte Royale</h3>
+                        <img src="{{ asset('/images/cardRoy/') }}${data.roy.image}" alt="${data.roy.name}" style="width: 100px;">
+                        <p>${data.roy.suite} - ${data.roy.name}: ${data.roy.description}</p>
+                    </div>
+                `;
+            }
+
+            // Afficher la carte mineure
+            if (data.min) {
+                resultDiv.innerHTML += `
+                    <div data-card-id="${data.min.id}">
+                        <h3>Carte Mineure</h3>
+                        <img src="{{ asset('/images/cardMin/') }}${data.min.image}" alt="${data.min.numero}" style="width: 100px;">
+                        <p>${data.min.numero} - ${data.min.suite}: ${data.min.qualite} ${data.min.defaut}</p>
+                    </div>
+                `;
+            }
         })
-        .catch(error => console.error('Erreur lors de la sauvegarde :', error));
+        .catch(error => console.error('Erreur lors du tirage des cartes :', error));
+});
+
+document.getElementById('save-hero-btn').addEventListener('click', function() {
+    const cardMajs = [];
+    const cardRoys = [];
+    const cardMins = [];
+
+    const cardsElements = document.querySelectorAll('#cards-result div');
+    cardsElements.forEach(cardElement => {
+        const cardType = cardElement.querySelector('h3').innerText; // Le type de carte (Majeure, Royale, Mineure)
+        const cardId = cardElement.getAttribute('data-card-id'); // Récupérer l'ID de la carte
+
+        if (cardType === "Carte Majeure") {
+            cardMajs.push(cardId); // Enregistrer l'ID de la carte majeure
+        } else if (cardType === "Carte Royale") {
+            cardRoys.push(cardId); // Enregistrer l'ID de la carte royale
+        } else if (cardType === "Carte Mineure") {
+            cardMins.push(cardId); // Enregistrer l'ID de la carte mineure
+        }
     });
+
+    const heroName = prompt("Entrez le nom de votre héros :"); // Demande un nom pour le héros
+
+    // Envoi des données via Fetch API
+    fetch('{{ path('app_save_hero') }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: heroName, cardMajs: cardMajs, cardRoys: cardRoys, cardMins: cardMins })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        alert(data.status); // Affiche un message de succès
+    })
+    .catch(error => console.error('Erreur lors de la sauvegarde :', error));
+});
+
+
 </script>
 
 {% endblock %}

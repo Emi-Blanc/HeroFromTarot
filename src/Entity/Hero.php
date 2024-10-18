@@ -24,7 +24,13 @@ class Hero
     private ?string $animal = null;
  
     #[ORM\ManyToMany(targetEntity: CardMaj::class)]
-    private Collection $cards;
+    private Collection $cardMaj;
+
+    #[ORM\ManyToMany(targetEntity: CardRoy::class)]
+    private Collection $cardRoy;
+
+    #[ORM\ManyToMany(targetEntity: CardMin::class)]
+    private Collection $cardMin;
  
     #[ORM\ManyToOne(inversedBy: 'heros')]
     #[ORM\JoinColumn(nullable: false)]
@@ -39,30 +45,49 @@ class Hero
     #[ORM\Column(length: 255)]
     private ?string $cheveux = null;
  
-    public function __construct()
-    {
-        $this->cards = new ArrayCollection();
+    // public function __construct()
+    // {
+    //     $this->cardMaj = new ArrayCollection();
  
-        // Liste des couleurs possibles
-        $colors = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠', '🩷', '⚫', '⚪', '🩶', '🪙'];
+    //     // Liste des couleurs possibles
+    //     $colors = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠', '🩷', '⚫', '⚪', '🩶', '🪙'];
  
-        // Liste des animaux possibles
-        $animals = ['🦁', '🐯', '🦅', '🦈', '🐺', '🐘', '🐻', '🐈‍⬛', '🐍', '🐬', '🐎', '🐠', '🦉', '🦌', '🦬', '🦫']; 
+    //     // Liste des animaux possibles
+    //     $animals = ['🦁', '🐯', '🦅', '🦈', '🐺', '🐘', '🐻', '🐈‍⬛', '🐍', '🐬', '🐎', '🐠', '🦉', '🦌', '🦬', '🦫']; 
 
-        $yeux = ['🔵', '🟢', '⚫', '🟣', '🟤' ]; 
+    //     $yeux = ['🔵', '🟢', '⚫', '🟣', '🟤' ]; 
 
-        $morphologie = ['V', 'A', 'H', 'O', '8'];
+    //     $morphologie = ['V', 'A', 'H', 'O', '8'];
 
-        $cheveux = ['Rasé', 'WolfCut', 'Mulet', 'Papillon', 'Court', 'Playmobil', 'Crollé', 'Paille', 'Houpette', 'Perruque', 'Chauve'];
+    //     $cheveux = ['Rasé', 'WolfCut', 'Mulet', 'Papillon', 'Court', 'Playmobil', 'Crollé', 'Paille', 'Houpette', 'Perruque', 'Chauve'];
 
         
  
-        // Attribuer une couleur et un animal aléatoires
+    //     // Attribuer une couleur et un animal aléatoires
+        // $this->color = $colors[array_rand($colors)];
+    //     $this->animal = $animals[array_rand($animals)];
+    //     $this->yeux = $yeux[array_rand($yeux)];
+    //     $this->morphologie = $morphologie[array_rand($morphologie)];
+    //     $this->cheveux = $cheveux[array_rand($cheveux)];
+    // }
+ 
+    public function __construct()
+    {
+        $this->cardMaj = new ArrayCollection();
+        $this->cardRoy = new ArrayCollection();
+        $this->cardMin = new ArrayCollection();
+
+        $colors = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠', '🩷', '⚫', '⚪', '🩶', '🪙'];
         $this->color = $colors[array_rand($colors)];
+        $animals = ['🦁', '🐯', '🦅', '🦈', '🐺', '🐘', '🐻', '🐈‍⬛', '🐍', '🐬', '🐎', '🐠', '🦉', '🦌', '🦬', '🦫'];
         $this->animal = $animals[array_rand($animals)];
+        $yeux = ['🔵', '🟢', '⚫', '🟣', '🟤' ]; 
         $this->yeux = $yeux[array_rand($yeux)];
+        $morphologie = ['V', 'A', 'H', 'O', '8'];
         $this->morphologie = $morphologie[array_rand($morphologie)];
+        $cheveux = ['Rasé', 'WolfCut', 'Mulet', 'Papillon', 'Court', 'Playmobil', 'Crollé', 'Paille', 'Houpette', 'Perruque', 'Chauve'];
         $this->cheveux = $cheveux[array_rand($cheveux)];
+
     }
  
     public function getId(): ?int
@@ -103,17 +128,48 @@ class Hero
         return $this;
     }
  
-    public function getCards(): Collection
-    {
-        return $this->cards;
-    }
+    // public function getCards(): Collection
+    // {
+    //     return $this->cards;
+    // }
  
-    public function addCard(CardMaj $card): static
+    public function addCardMaj(CardMaj $card): static
     {
-        if (!$this->cards->contains($card)) {
-            $this->cards->add($card);
+        if (!$this->cardMaj->contains($card)) {
+            $this->cardMaj->add($card);
         }
         return $this;
+    }
+
+    public function getCardMajs(): Collection
+    {
+        return $this->cardMaj;
+    }
+
+    public function addCardRoy(CardRoy $card): static
+    {
+        if (!$this->cardRoy->contains($card)) {
+            $this->cardRoy->add($card);
+        }
+        return $this;
+    }
+
+    public function getCardRoys(): Collection
+    {
+        return $this->cardRoy;
+    }
+
+    public function addCardMin(CardMin $card): static
+    {
+        if (!$this->cardMin->contains($card)) {
+            $this->cardMin->add($card);
+        }
+        return $this;
+    }
+    
+    public function getCardMins(): Collection
+    {
+        return $this->cardMin;
     }
  
     public function getUser(): ?User
