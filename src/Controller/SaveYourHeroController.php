@@ -42,7 +42,9 @@ class SaveYourHeroController extends AbstractController
                     error_log("Carte majeure non trouvée: " . $cardId);
                 }
             }
-    
+
+            
+
             // Ajout des cartes royales
             foreach ($data['cardRoys'] as $cardId) {
                 $cardRoy = $cardRoyRepository->find($cardId);
@@ -103,19 +105,26 @@ class SaveYourHeroController extends AbstractController
     }
 
     #[Route('/hero/{id}', name: 'app_hero_detail')]
-    public function heroDetail($id, EntityManagerInterface $entityManager): Response
-    {
-        $hero = $entityManager->getRepository(Hero::class)->find($id);
+public function heroDetail($id, EntityManagerInterface $entityManager): Response
+{
+    $hero = $entityManager->getRepository(Hero::class)->find($id);
 
     if (!$hero) {
         throw $this->createNotFoundException('Héros non trouvé');
     }
-    
-        return $this->render('save_your_hero/detail.html.twig', [
-            'hero' => $hero,
-            'cardMajs' => $hero->getCardMajs(),
-            'cardRoys' => $hero->getCardRoys(),
-            'cardMins' => $hero->getCardMins(),
-        ]);
-    }
+
+    error_log("Héros trouvé: " . $hero->getName());
+
+    // Vérifiez les cartes
+    error_log("Cartes majeures: " . count($hero->getCardMajs()));
+    error_log("Cartes royales: " . count($hero->getCardRoys()));
+    error_log("Cartes mineures: " . count($hero->getCardMins()));
+
+    return $this->render('save_your_hero/detail.html.twig', [
+        'hero' => $hero,
+        'cardMajs' => $hero->getCardMajs(),
+        'cardRoys' => $hero->getCardRoys(),
+        'cardMins' => $hero->getCardMins(),
+    ]);
+}
 }

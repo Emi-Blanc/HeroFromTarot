@@ -45,32 +45,7 @@ class Hero
     #[ORM\Column(length: 255)]
     private ?string $cheveux = null;
  
-    // public function __construct()
-    // {
-    //     $this->cardMaj = new ArrayCollection();
- 
-    //     // Liste des couleurs possibles
-    //     $colors = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠', '🩷', '⚫', '⚪', '🩶', '🪙'];
- 
-    //     // Liste des animaux possibles
-    //     $animals = ['🦁', '🐯', '🦅', '🦈', '🐺', '🐘', '🐻', '🐈‍⬛', '🐍', '🐬', '🐎', '🐠', '🦉', '🦌', '🦬', '🦫']; 
-
-    //     $yeux = ['🔵', '🟢', '⚫', '🟣', '🟤' ]; 
-
-    //     $morphologie = ['V', 'A', 'H', 'O', '8'];
-
-    //     $cheveux = ['Rasé', 'WolfCut', 'Mulet', 'Papillon', 'Court', 'Playmobil', 'Crollé', 'Paille', 'Houpette', 'Perruque', 'Chauve'];
-
-        
- 
-    //     // Attribuer une couleur et un animal aléatoires
-        // $this->color = $colors[array_rand($colors)];
-    //     $this->animal = $animals[array_rand($animals)];
-    //     $this->yeux = $yeux[array_rand($yeux)];
-    //     $this->morphologie = $morphologie[array_rand($morphologie)];
-    //     $this->cheveux = $cheveux[array_rand($cheveux)];
-    // }
- 
+    
     public function __construct()
     {
         $this->cardMaj = new ArrayCollection();
@@ -128,11 +103,6 @@ class Hero
         return $this;
     }
  
-    // public function getCards(): Collection
-    // {
-    //     return $this->cards;
-    // }
- 
     public function addCardMaj(CardMaj $card): static
     {
         if (!$this->cardMaj->contains($card)) {
@@ -145,6 +115,7 @@ class Hero
     {
         return $this->cardMaj;
     }
+    
 
     public function addCardRoy(CardRoy $card): static
     {

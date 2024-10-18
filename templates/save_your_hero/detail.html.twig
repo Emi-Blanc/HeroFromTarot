@@ -3,7 +3,7 @@
 {% block title %}Détails du Héros{% endblock %}
 
 {% block body %}
-    <h2>Nom : {{ hero.name }} </h2>
+    <h2>Nom : {{ hero.name }} </h2><br>
     
     <h2>Attributs : </h2>
     Couleur : {{ hero.color }} <br> 
@@ -13,7 +13,8 @@
     Cheveux : {{ hero.cheveux }} <br> 
     Yeux: {{ hero.yeux }} <br> 
 
-    <h2>Personnalité :</h2>
+    <br><h2>Personnalité :</h2>
+    <h4>Cartes Majeures</h4>
     <ul>
         {% if hero.getCardMajs() is not empty %}
             {% for cardMaj in hero.getCardMajs() %}
@@ -25,7 +26,10 @@
         {% else %}
             <li>Aucune carte majeure associée</li>
         {% endif %}
+    </ul>
 
+    <h4>Cartes Royales</h4>
+    <ul>
         {% if hero.getCardRoys() is not empty %}
             {% for cardRoy in hero.getCardRoys() %}
                 <li>
@@ -36,7 +40,10 @@
         {% else %}
             <li>Aucune carte royale associée</li>
         {% endif %}
+    </ul>
 
+    <h4>Cartes Mineures</h4>
+    <ul>
         {% if hero.getCardMins() is not empty %}
             {% for cardMin in hero.getCardMins() %}
                 <li>
