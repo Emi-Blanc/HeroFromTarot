@@ -30,6 +30,7 @@
     fetch('{{ path('app_create_hero_draw') }}')
         .then(response => response.json())
         .then(data => {
+            // console.log (data);
             let resultDiv = document.getElementById('cards-result');
             resultDiv.innerHTML = ''; // Vider le résultat précédent
 
@@ -58,7 +59,7 @@
             // Afficher la carte mineure
             if (data.min) {
                 resultDiv.innerHTML += `
-                    <div data-card-id="${data.min.id}">
+                    <div data-card-id="${data.roy.id}">
                         <h3>Carte Mineure</h3>
                         <img src="{{ asset('/images/cardMin/') }}${data.min.image}" alt="${data.min.numero}" style="width: 100px;">
                         <p>${data.min.numero} - ${data.min.suite}: ${data.min.qualite} ${data.min.defaut}</p>
@@ -70,25 +71,31 @@
 });
 
 document.getElementById('save-hero-btn').addEventListener('click', function() {
-    const cardMajs = [];
-    const cardRoys = [];
-    const cardMins = [];
+
+    const cartes = [];
 
     const cardsElements = document.querySelectorAll('#cards-result div');
+
     cardsElements.forEach(cardElement => {
+        // console.log(cardElement);
         const cardType = cardElement.querySelector('h3').innerText; // Le type de carte (Majeure, Royale, Mineure)
         const cardId = cardElement.getAttribute('data-card-id'); // Récupérer l'ID de la carte
 
+        // console.log (cardType);
+        // console.log(cardType);
+
         if (cardType === "Carte Majeure") {
-            cardMajs.push(cardId); // Enregistrer l'ID de la carte majeure
+            cartes.push(cardId); // Enregistrer l'ID de la carte majeure
         } else if (cardType === "Carte Royale") {
-            cardRoys.push(cardId); // Enregistrer l'ID de la carte royale
+            cartes.push(cardId); // Enregistrer l'ID de la carte royale
         } else if (cardType === "Carte Mineure") {
-            cardMins.push(cardId); // Enregistrer l'ID de la carte mineure
+            cartes.push(cardId); // Enregistrer l'ID de la carte mineure
         }
     });
 
     const heroName = prompt("Entrez le nom de votre héros :"); // Demande un nom pour le héros
+
+    
 
     // Envoi des données via Fetch API
     fetch('{{ path('app_save_hero') }}', {
@@ -96,11 +103,11 @@ document.getElementById('save-hero-btn').addEventListener('click', function() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name: heroName, cardMajs: cardMajs, cardRoys: cardRoys, cardMins: cardMins })
+        body: JSON.stringify({ name: heroName, cartes: cartes })
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         alert(data.status); // Affiche un message de succès
     })
     .catch(error => console.error('Erreur lors de la sauvegarde :', error));

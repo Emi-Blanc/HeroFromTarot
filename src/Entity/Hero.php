@@ -23,15 +23,7 @@ class Hero
     #[ORM\Column(length: 50)]
     private ?string $animal = null;
  
-    #[ORM\ManyToMany(targetEntity: CardMaj::class)]
-    private Collection $cardMaj;
 
-    #[ORM\ManyToMany(targetEntity: CardRoy::class)]
-    private Collection $cardRoy;
-
-    #[ORM\ManyToMany(targetEntity: CardMin::class)]
-    private Collection $cardMin;
- 
     #[ORM\ManyToOne(inversedBy: 'heros')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -44,13 +36,22 @@ class Hero
 
     #[ORM\Column(length: 255)]
     private ?string $cheveux = null;
+
+    #[ORM\ManyToOne(inversedBy: 'heroes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CardMaj $cardMaj = null;
+
+    #[ORM\ManyToOne(inversedBy: 'heroes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CardRoy $cardRoy = null;
+
+    #[ORM\ManyToOne(inversedBy: 'heroes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CardMin $cardMin = null;
  
     
     public function __construct()
     {
-        $this->cardMaj = new ArrayCollection();
-        $this->cardRoy = new ArrayCollection();
-        $this->cardMin = new ArrayCollection();
 
         $colors = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠', '🩷', '⚫', '⚪', '🩶', '🪙'];
         $this->color = $colors[array_rand($colors)];
@@ -103,45 +104,7 @@ class Hero
         return $this;
     }
  
-    public function addCardMaj(CardMaj $card): static
-    {
-        if (!$this->cardMaj->contains($card)) {
-            $this->cardMaj->add($card);
-        }
-        return $this;
-    }
-
-    public function getCardMajs(): Collection
-    {
-        return $this->cardMaj;
-    }
     
-
-    public function addCardRoy(CardRoy $card): static
-    {
-        if (!$this->cardRoy->contains($card)) {
-            $this->cardRoy->add($card);
-        }
-        return $this;
-    }
-
-    public function getCardRoys(): Collection
-    {
-        return $this->cardRoy;
-    }
-
-    public function addCardMin(CardMin $card): static
-    {
-        if (!$this->cardMin->contains($card)) {
-            $this->cardMin->add($card);
-        }
-        return $this;
-    }
-    
-    public function getCardMins(): Collection
-    {
-        return $this->cardMin;
-    }
  
     public function getUser(): ?User
     {
@@ -187,6 +150,42 @@ class Hero
     public function setCheveux(string $cheveux): static
     {
         $this->cheveux = $cheveux;
+
+        return $this;
+    }
+
+    public function getCardMaj(): ?CardMaj
+    {
+        return $this->cardMaj;
+    }
+
+    public function setCardMaj(?CardMaj $cardMaj): static
+    {
+        $this->cardMaj = $cardMaj;
+
+        return $this;
+    }
+
+    public function getCardRoy(): ?CardRoy
+    {
+        return $this->cardRoy;
+    }
+
+    public function setCardRoy(?CardRoy $cardRoy): static
+    {
+        $this->cardRoy = $cardRoy;
+
+        return $this;
+    }
+
+    public function getCardMin(): ?CardMin
+    {
+        return $this->cardMin;
+    }
+
+    public function setCardMin(?CardMin $cardMin): static
+    {
+        $this->cardMin = $cardMin;
 
         return $this;
     }

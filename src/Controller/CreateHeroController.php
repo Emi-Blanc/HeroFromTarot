@@ -39,18 +39,21 @@ public function drawCards(EntityManagerInterface $entityManager): JsonResponse
         // Préparer le résultat pour chaque type de carte
         $randomCards = [
             'maj' => [
+                'id'=> $randomCardMaj->getId(),
                 'name' => $randomCardMaj->getName(),
                 'number' => $randomCardMaj->getNumber(),
                 'description' => $randomCardMaj->getDescription(),
                 'image' => $randomCardMaj->getImage(),
             ],
             'roy' => [
+                'id'=> $randomCardRoy->getId(),
                 'name' => $randomCardRoy->getNom(),
                 'suite' => $randomCardRoy->getSuite(),
                 'description' => $randomCardRoy->getDescription2(),
                 'image' => $randomCardRoy->getImage2(),
             ],
             'min' => [
+                'id'=> $randomCardMin->getId(),
                 'numero' => $randomCardMin->getNumero(),
                 'suite' => $randomCardMin->getSuite2(),
                 'qualite' => $randomCardMin->getQualite(),

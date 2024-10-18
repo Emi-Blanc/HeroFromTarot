@@ -35,15 +35,15 @@ class HeroCardFixture extends Fixture implements DependentFixtureInterface
 
             // Assigner une carte majeure
             $indexMaj = array_rand($cartesMaj);
-            $hero->addCardMaj($cartesMaj[$indexMaj]);
+            $hero->setCardMaj($cartesMaj[$indexMaj]);
 
             // Assigner une carte royale
             $indexRoy = array_rand($cartesRoy);
-            $hero->addCardRoy($cartesRoy[$indexRoy]);
+            $hero->setCardRoy($cartesRoy[$indexRoy]);
 
             // Assigner une carte mineure
             $indexMin = array_rand($cartesMin);
-            $hero->addCardMin($cartesMin[$indexMin]);
+            $hero->setCardMin($cartesMin[$indexMin]);
         }
 
         $manager->flush();

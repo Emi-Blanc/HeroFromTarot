@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CardMinRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CardMinRepository::class)]
@@ -27,6 +29,17 @@ class CardMin
 
     #[ORM\Column(length: 255)]
     private ?string $image3 = null;
+
+    /**
+     * @var Collection<int, Hero>
+     */
+    #[ORM\OneToMany(targetEntity: Hero::class, mappedBy: 'cardMin', orphanRemoval: true)]
+    private Collection $heroes;
+
+    public function __construct()
+    {
+        $this->heroes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +102,36 @@ class CardMin
     public function setImage3(string $image3): static
     {
         $this->image3 = $image3;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hero>
+     */
+    public function getHeroes(): Collection
+    {
+        return $this->heroes;
+    }
+
+    public function addHero(Hero $hero): static
+    {
+        if (!$this->heroes->contains($hero)) {
+            $this->heroes->add($hero);
+            $hero->setCardMin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHero(Hero $hero): static
+    {
+        if ($this->heroes->removeElement($hero)) {
+            // set the owning side to null (unless already changed)
+            if ($hero->getCardMin() === $this) {
+                $hero->setCardMin(null);
+            }
+        }
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CardRoyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CardRoyRepository::class)]
@@ -24,6 +26,17 @@ class CardRoy
 
     #[ORM\Column(length: 255)]
     private ?string $image2 = null;
+
+    /**
+     * @var Collection<int, Hero>
+     */
+    #[ORM\OneToMany(targetEntity: Hero::class, mappedBy: 'cardRoy', orphanRemoval: true)]
+    private Collection $heroes;
+
+    public function __construct()
+    {
+        $this->heroes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +87,36 @@ class CardRoy
     public function setImage2(string $image2): static
     {
         $this->image2 = $image2;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hero>
+     */
+    public function getHeroes(): Collection
+    {
+        return $this->heroes;
+    }
+
+    public function addHero(Hero $hero): static
+    {
+        if (!$this->heroes->contains($hero)) {
+            $this->heroes->add($hero);
+            $hero->setCardRoy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHero(Hero $hero): static
+    {
+        if ($this->heroes->removeElement($hero)) {
+            // set the owning side to null (unless already changed)
+            if ($hero->getCardRoy() === $this) {
+                $hero->setCardRoy(null);
+            }
+        }
 
         return $this;
     }
